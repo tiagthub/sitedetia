@@ -1,0 +1,51 @@
+---
+title: "script1"
+author: "moi"
+date: "2026-04-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Objet
+
+Présenter un premier script et l'intégration d'une image (carte)
+
+# Librairies
+
+```{r}
+library(sf)
+library(mapsf)
+```
+
+
+# Données
+
+
+```{r}
+st_layers("base.gpkg")
+```
+
+commune et carreau
+
+```{r}
+bondy <- st_read("base.gpkg", "commune")
+bondy <- bondy [bondy$code == 93010,]
+car <- st_read("base.gpkg", "car")
+car <- car [car$lcog_geo == 93010,]
+```
+
+
+# Cartograhie
+
+
+```{r}
+png("carte.png")
+mf_map(bondy)
+mf_map(car, add = T)
+mf_layout("Ma première carte", "Mars 2026\nInsee")
+dev.off()
+```
+![](carte.png)
